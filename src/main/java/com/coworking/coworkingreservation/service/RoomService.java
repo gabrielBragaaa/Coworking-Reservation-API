@@ -8,6 +8,8 @@ import com.coworking.coworkingreservation.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class RoomService {
@@ -21,5 +23,21 @@ public class RoomService {
 
         return RoomMapper.toResponse(savedRoom);
 
+    }
+
+    public List<RoomResponse> findAllRooms() {
+
+        List<Room> rooms = roomRepository.findAll();
+
+        return rooms.stream()
+                .map(RoomMapper::toResponse)
+                .toList();
+    }
+
+    public RoomResponse findRoomById(Long id) {
+
+        Room room = roomRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Room not found with id: " + id));
+        return RoomMapper.toResponse(room);
     }
 }
