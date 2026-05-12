@@ -19,8 +19,9 @@ public class Room {
     @Column(nullable = false)
     private String name;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String type;
+    private RoomType type;
 
     @Column(nullable = false)
     private Integer capacity;
