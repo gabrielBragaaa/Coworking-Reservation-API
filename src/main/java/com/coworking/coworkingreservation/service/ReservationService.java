@@ -5,6 +5,7 @@ import com.coworking.coworkingreservation.dto.ReservationResponse;
 import com.coworking.coworkingreservation.entity.Reservation;
 import com.coworking.coworkingreservation.entity.Room;
 import com.coworking.coworkingreservation.exception.BusinessException;
+import com.coworking.coworkingreservation.exception.ResourceNotFoundException;
 import com.coworking.coworkingreservation.mapper.ReservationMapper;
 import com.coworking.coworkingreservation.repository.ReservationRepository;
 import com.coworking.coworkingreservation.repository.RoomRepository;
@@ -22,7 +23,8 @@ public class ReservationService {
     private final RoomRepository roomRepository;
 
     public ReservationResponse createReservation(ReservationRequest request) {
-        Room room = roomRepository.findById(request.getRoomId()).orElseThrow();
+        Room room = roomRepository.findById(request.getRoomId())
+                .orElseThrow(() -> new ResourceNotFoundException("Room not found"));
         List<Reservation> conflicts = reservationRepository.findConflictingReservations(
                 room.getId(),
                 request.getDate(),
@@ -39,7 +41,8 @@ public class ReservationService {
     }
 
     public void cancelReservation(Long reservationId){
-        Reservation reservation = reservationRepository.findById(reservationId).orElseThrow();
+        Reservation reservation = reservationRepository.findById(reservationId)
+                .orElseThrow(() -> new ResourceNotFoundException("Reservation not found"));
         reservation.setCanceled(true);
         reservationRepository.save(reservation);
     }
