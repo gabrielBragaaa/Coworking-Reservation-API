@@ -24,4 +24,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
             LocalTime startTime,
             LocalTime endTime
     );
+
+    List<Reservation> findByDateAndCanceledFalse(LocalDate date);
+
 }

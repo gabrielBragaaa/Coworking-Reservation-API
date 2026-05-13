@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.List;
+
 @RestController
 @RequestMapping("/reservations")
 @RequiredArgsConstructor
@@ -25,6 +28,11 @@ public class ReservationController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void cancelReservation(@PathVariable Long id){
         reservationService.cancelReservation(id);
+    }
+
+    @GetMapping("/daily")
+    public List<ReservationResponse> findDailyReservations(@RequestParam LocalDate date){
+        return reservationService.findDailyReservations(date);
     }
 
 }

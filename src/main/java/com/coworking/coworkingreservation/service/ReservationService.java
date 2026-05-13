@@ -11,6 +11,7 @@ import com.coworking.coworkingreservation.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -41,5 +42,10 @@ public class ReservationService {
         Reservation reservation = reservationRepository.findById(reservationId).orElseThrow();
         reservation.setCanceled(true);
         reservationRepository.save(reservation);
+    }
+
+    public List<ReservationResponse> findDailyReservations(LocalDate date){
+        List<Reservation> reservations = reservationRepository.findByDateAndCanceledFalse(date);
+        return reservations.stream().map(ReservationMapper::toResponse).toList();
     }
 }
