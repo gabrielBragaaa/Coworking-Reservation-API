@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @RestController
@@ -32,5 +34,10 @@ public class RoomController {
     public RoomResponse findByRoomId(@PathVariable Long id){
         return roomService.findRoomById(id);
 
+    }
+
+    @GetMapping("/available")
+    public List<RoomResponse> findAvailableRooms(@RequestParam LocalDate date, @RequestParam LocalTime startTime, @RequestParam LocalTime endTime){
+        return roomService.findAvailableRooms(date,startTime,endTime);
     }
 }

@@ -9,5 +9,4 @@ public class CoworkingReservationApplication {
     public static void main(String[] args) {
         SpringApplication.run(CoworkingReservationApplication.class, args);
     }
-
 }
