@@ -17,25 +17,20 @@ public class RoomService {
     private final RoomRepository roomRepository;
 
     public RoomResponse createRoom(RoomRequest request) {
-
         Room room = RoomMapper.toEntity(request);
         Room savedRoom = roomRepository.save(room);
-
         return RoomMapper.toResponse(savedRoom);
 
     }
 
     public List<RoomResponse> findAllRooms() {
-
         List<Room> rooms = roomRepository.findAll();
-
         return rooms.stream()
                 .map(RoomMapper::toResponse)
                 .toList();
     }
 
     public RoomResponse findRoomById(Long id) {
-
         Room room = roomRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Room not found with id: " + id));
         return RoomMapper.toResponse(room);
