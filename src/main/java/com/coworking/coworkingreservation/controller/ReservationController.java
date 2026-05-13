@@ -21,4 +21,10 @@ public class ReservationController {
         return reservationService.createReservation(request);
     }
 
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void cancelReservation(@PathVariable Long id){
+        reservationService.cancelReservation(id);
+    }
+
 }

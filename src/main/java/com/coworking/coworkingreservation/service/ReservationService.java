@@ -36,4 +36,10 @@ public class ReservationService {
         Reservation savedReservation = reservationRepository.save(reservation);
         return ReservationMapper.toResponse(savedReservation);
     }
+
+    public void cancelReservation(Long reservationId){
+        Reservation reservation = reservationRepository.findById(reservationId).orElseThrow();
+        reservation.setCanceled(true);
+        reservationRepository.save(reservation);
+    }
 }
